@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import './App.css';
-import {TodoForm} from './components/TodoForm'
+import {TodoForm, TodoList} from './components'
 
 class App extends Component {
   constructor(props) {
@@ -43,13 +43,7 @@ class App extends Component {
         <div className="Todo-App">
           <TodoForm handleChange={this.handleChange}
             currentTodo={this.state.currentTodo}/>
-          <ul>
-            {this.state.todos.map(todo => 
-              <li key={todo.id}>
-                <input type="checkbox" defaultChecked={todo.isComplete}/> {todo.name}
-              </li>
-            )}
-          </ul>
+          <TodoList todos={this.state.todos}/>
         </div>
       </div> 
     );
