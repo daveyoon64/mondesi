@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import './App.css';
+import {TodoForm} from './components/TodoForm'
 
 class App extends Component {
   constructor(props) {
@@ -40,12 +41,8 @@ class App extends Component {
           <h2>Todos React</h2>
         </header>
         <div className="Todo-App">
-          <form>
-            <input type="text" 
-                   value={this.state.currentTodo}
-                   onChange={this.handleChange}
-                   onKeyDown={this.handleKeyPress} />
-          </form>
+          <TodoForm handleChange={this.handleChange}
+            currentTodo={this.state.currentTodo}/>
           <ul>
             {this.state.todos.map(todo => 
               <li key={todo.id}>
