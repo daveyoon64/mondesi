@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import './App.css';
-import {TodoForm, TodoList} from './components'
+import {TodoForm, TodoList} from './components';
+import {addTodo, generateId} from './lib/todoHelpers';
 
 class App extends Component {
   constructor(props) {
@@ -14,10 +15,28 @@ class App extends Component {
       currentTodo: ''
     };
     this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleChange(e) {
     this.setState({currentTodo: e.target.value});
+  }
+
+  handleSubmit(e) {
+    e.preventDefault(); // prevents form from trying to submit using GET
+    const newId = generateId();
+    const newTodo = {
+      id: newId,
+      name: this.state.currentTodo,
+      isComplete: false
+    };
+    const updatedTodos = addTodo(this.state.todos, newTodo);
+    this.setState({
+      todos: updatedTodos,
+      currentTodo: ''
+    })
+
+
   }
 
   // handleKeyPress = (e) => {
@@ -42,7 +61,8 @@ class App extends Component {
         </header>
         <div className="Todo-App">
           <TodoForm handleChange={this.handleChange}
-            currentTodo={this.state.currentTodo}/>
+            currentTodo={this.state.currentTodo}
+            handleSubmit={this.handleSubmit} />
           <TodoList todos={this.state.todos}/>
         </div>
       </div> 
