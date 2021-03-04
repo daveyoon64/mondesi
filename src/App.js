@@ -4,33 +4,31 @@ import {TodoForm, TodoList} from './components';
 import {addTodo, generateId} from './lib/todoHelpers';
 
 class App extends Component {
+  state = {
+    todos: [
+      {id: 1, name: 'Learn JSX', isComplete: true},
+      {id: 2, name: 'Build an awesome app', isComplete: false},
+      {id: 3, name: 'Ship it', isComplete: false}
+    ],
+    currentTodo: ''
+  };
+
   constructor(props) {
     super(props);
-    this.state = {
-      todos: [
-        {id: 1, name: 'Learn JSX', isComplete: true},
-        {id: 2, name: 'Build an awesome app', isComplete: false},
-        {id: 3, name: 'Ship it', isComplete: false}
-      ],
-      currentTodo: ''
-    };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleEmptySubmit = this.handleEmptySubmit.bind(this);
   }
 
-  handleChange(e) {
+  handleChange = (e) => {
     this.setState({currentTodo: e.target.value});
   }
 
-  handleEmptySubmit(e) {
+  handleEmptySubmit = (e) => {
     e.preventDefault();
     this.setState({
       errorMessage: 'Please supply a todo name!'
     })
   }
 
-  handleSubmit(e) {
+  handleSubmit = (e) => {
     e.preventDefault(); // prevents form from trying to submit using GET
     const newId = generateId();
     const newTodo = {
