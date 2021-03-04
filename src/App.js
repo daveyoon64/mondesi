@@ -16,10 +16,18 @@ class App extends Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleEmptySubmit = this.handleEmptySubmit.bind(this);
   }
 
   handleChange(e) {
     this.setState({currentTodo: e.target.value});
+  }
+
+  handleEmptySubmit(e) {
+    e.preventDefault();
+    this.setState({
+      errorMessage: 'Please supply a todo name!'
+    })
   }
 
   handleSubmit(e) {
@@ -33,36 +41,25 @@ class App extends Component {
     const updatedTodos = addTodo(this.state.todos, newTodo);
     this.setState({
       todos: updatedTodos,
-      currentTodo: ''
+      currentTodo: '',
+      errorMessage: ''
     })
 
 
   }
 
-  // handleKeyPress = (e) => {
-  //   if (e.key === 'Enter') {
-  //     const newTodo = [{
-  //       id: 123,
-  //       name: e.target.value,
-  //       isComplete: false
-  //     }];
-  //     const prevState = this.state.todos;
-  //     this.setState(prevState => ({
-  //       todos: [...prevState.todos, newTodo]
-  //     }))
-  //   }
-  // }
-
   render() {
+    const submitHandler = this.state.currentTodo ? this.handleSubmit : this.handleEmptySubmit;
     return (
       <div className="App">
         <header className="App-header">
           <h2>Todos React</h2>
         </header>
         <div className="Todo-App">
+          {this.state.errorMessage && <span className='error'>{this.state.errorMessage}</span>}
           <TodoForm handleChange={this.handleChange}
             currentTodo={this.state.currentTodo}
-            handleSubmit={this.handleSubmit} />
+            handleSubmit={submitHandler} />
           <TodoList todos={this.state.todos}/>
         </div>
       </div> 
