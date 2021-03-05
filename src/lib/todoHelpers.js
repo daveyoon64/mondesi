@@ -16,3 +16,12 @@ export const toggleTodo = (todo) => {
   // {id:1, name: 'one', isComplete: true};
   return {...todo, isComplete: !todo.isComplete}; 
 }
+
+export const updateTodo = (list, updatedTodo) => {
+  const updatedIndex = list.findIndex(item => item.id === updatedTodo.id);
+  return [
+    ...list.slice(0, updatedIndex),
+    updatedTodo,
+    ...list.slice(updatedIndex + 1)
+  ]
+}
