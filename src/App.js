@@ -13,10 +13,6 @@ class App extends Component {
     currentTodo: ''
   };
 
-  constructor(props) {
-    super(props);
-  }
-
   handleChange = (e) => {
     this.setState({currentTodo: e.target.value});
   }
