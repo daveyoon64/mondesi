@@ -23,5 +23,5 @@ export const updateTodo = (list, updatedTodo) => {
     ...list.slice(0, updatedIndex),
     updatedTodo,
     ...list.slice(updatedIndex + 1)
-  ]
+  ];
 }
