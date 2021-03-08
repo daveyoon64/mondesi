@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import './App.css';
 import {TodoForm, TodoList} from './components';
-import {addTodo, generateId, findById, toggleTodo, updateTodo} from './lib/todoHelpers';
+import {addTodo, generateId, findById, toggleTodo, updateTodo, removeTodo} from './lib/todoHelpers';
 
 class App extends Component {
   state = {
@@ -12,6 +12,12 @@ class App extends Component {
     ],
     currentTodo: ''
   };
+
+  handleRemove = (id, e) => {
+    e.preventDefault(); // stops the default behavior from updating the address bar
+    const updatedTodos = removeTodo(this.state.todos, id);
+    this.setState({todos: updatedTodos});
+  }
 
   handleToggle = (id) => {
     const todo = findById(id, this.state.todos);
@@ -62,7 +68,8 @@ class App extends Component {
             currentTodo={this.state.currentTodo}
             handleSubmit={submitHandler} />
           <TodoList handleToggle={this.handleToggle} 
-            todos={this.state.todos} />
+            todos={this.state.todos}
+            handleRemove={this.handleRemove} />
         </div>
       </div> 
     );
