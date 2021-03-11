@@ -1,13 +1,16 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
+const getCurrentPath = () => {
+  const path = document.location.pathname;
+  return path.substring(path.lastIndexOf('/'));
+}
 export class Router extends Component {
-  handleClick = (e) => {
-    e.preventDefault();
-    window.history.pushState(null, '', this.props.to);
+  state = {
+    route: getCurrentPath()
   }
   render() {
-    return <a href="#" onClick={this.handleClick}>{this.props.children}</a>
+    return <div>{this.props.children}</div>
   }
 }
 
