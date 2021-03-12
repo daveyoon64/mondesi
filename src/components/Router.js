@@ -11,11 +11,17 @@ export const RouterContext = React.createContext();
 export class Router extends Component {
   state = {
     route: getCurrentPath()
-  }
+  };
 
   handleLinkClick = (route) => {
     this.setState({route});
     window.history.pushState(null, '', route);
+  }
+
+  componentDidMount() {
+    window.onpopstate = () => {
+      this.setState({route: getCurrentPath()});
+    };
   }
 
   render() {
