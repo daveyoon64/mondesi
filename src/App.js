@@ -1,7 +1,8 @@
 import { Component } from 'react';
 import './App.css';
 import {TodoForm, TodoList, Footer} from './components';
-import {addTodo, generateId, findById, toggleTodo, updateTodo, removeTodo} from './lib/todoHelpers';
+import {RouterContext} from './components/Router';
+import {addTodo, generateId, findById, toggleTodo, updateTodo, removeTodo, filterTodos} from './lib/todoHelpers';
 
 class App extends Component {
   state = {
@@ -53,8 +54,11 @@ class App extends Component {
     })
   }
 
+  // gives us access to this.context.route
+  static contextType = RouterContext;
   render() {
     const submitHandler = this.state.currentTodo ? this.handleSubmit : this.handleEmptySubmit;
+    const displayTodos = filterTodos(this.state.todos, this.context.route);
     return (
       <div className="App">
         <header className="App-header">
@@ -66,7 +70,7 @@ class App extends Component {
             currentTodo={this.state.currentTodo}
             handleSubmit={submitHandler} />
           <TodoList handleToggle={this.handleToggle} 
-            todos={this.state.todos}
+            todos={displayTodos}
             handleRemove={this.handleRemove} />
           <Footer />
         </div>

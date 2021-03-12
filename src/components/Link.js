@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {Router, RouterContext} from './Router';
+import {RouterContext} from './Router';
 
 export class Link extends Component {
   static contextType = RouterContext;
