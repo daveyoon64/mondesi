@@ -51,8 +51,6 @@ class App extends Component {
       currentTodo: '',
       errorMessage: ''
     })
-
-
   }
 
   render() {
