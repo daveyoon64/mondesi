@@ -54,3 +54,14 @@ export const filterTodos = (list, routeString ) => {
       return list;
   }
 }
+
+export const store = (...args) => {
+  const namespace = args[0];
+  const data = args[1];
+  if (args.length > 1) {
+    return localStorage.setItem(namespace, JSON.stringify(data));
+  } else {
+    var store = localStorage.getItem(namespace);
+    return (store && JSON.parse(store)) || [];
+  }
+}

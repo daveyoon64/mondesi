@@ -1,23 +1,24 @@
 import { Component } from 'react';
+import testUtils from 'react-dom/test-utils';
 import './App.css';
 import {TodoForm, TodoList, Footer} from './components';
 import {RouterContext} from './components/Router';
-import {addTodo, generateId, findById, toggleTodo, updateTodo, removeTodo, filterTodos} from './lib/todoHelpers';
+import {addTodo, generateId, findById, toggleTodo, updateTodo, removeTodo, filterTodos, store} from './lib/todoHelpers';
 
 class App extends Component {
   state = {
-    todos: [
-      {id: 1, name: 'Learn JSX', isComplete: true},
-      {id: 2, name: 'Build an awesome app', isComplete: false},
-      {id: 3, name: 'Ship it', isComplete: false}
-    ],
+    todos: [],
     currentTodo: ''
   };
+
+  // using localStorage for persistence layer
+  todosDB = store('todos-react');
 
   handleRemove = (id, e) => {
     e.preventDefault(); // stops the default behavior from updating the address bar
     const updatedTodos = removeTodo(this.state.todos, id);
     this.setState({todos: updatedTodos});
+    store('todos-react', updatedTodos);
   }
 
   handleToggle = (id) => {
@@ -25,6 +26,7 @@ class App extends Component {
     const toggled = toggleTodo(todo);
     const updatedTodos = updateTodo(this.state.todos, toggled);
     this.setState({todos: updatedTodos});
+    store('todos-react', updatedTodos);
   }
 
   handleChange = (e) => {
@@ -52,6 +54,7 @@ class App extends Component {
       currentTodo: '',
       errorMessage: ''
     })
+    store('todos-react', updatedTodos);
   }
 
   // gives us access to this.context.route
